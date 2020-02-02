@@ -25,6 +25,7 @@ public class BoneManager : MonoBehaviour
         healthBarOrigin = healthbar.transform.position;
         score = FindObjectOfType<Score>();
         audio = FindObjectOfType<AudioManager>();
+        score.score = 0;
     }
 
     // Update is called once per frame
