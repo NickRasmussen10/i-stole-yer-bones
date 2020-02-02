@@ -34,6 +34,7 @@ public class insideBone : MonoBehaviour
 
     IEnumerator HandleExplosion()
     {
+        Camera.main.gameObject.GetComponent<Shaky>().StartShake(0.07f, 0.25f);
         hasBone = false;
         Vector2 explosionForce = Vector2.zero;
         GameObject newBone = Instantiate(pref_outsideBone, transform.position, Quaternion.identity);
