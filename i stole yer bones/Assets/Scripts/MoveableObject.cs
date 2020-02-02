@@ -74,6 +74,7 @@ public class MoveableObject : MonoBehaviour
         {
             if (!isHeld)
             {
+                FindObjectOfType<AudioManager>().Play("bone pop");
                 transform.parent = mouse.transform;
                 collider.isTrigger = true;
                 isHeld = true;

@@ -24,7 +24,7 @@ public class Shaky : MonoBehaviour
     IEnumerator Shake(float intensity, float duration)
     {
         float time = 0;
-        Vector3 origin = transform.position;
+        Vector3 origin = new Vector3(0.0f, 0.0f, -10.0f);
         Vector3 newPos = transform.position;
         while(time < duration)
         {

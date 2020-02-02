@@ -34,6 +34,31 @@ public class insideBone : MonoBehaviour
 
     IEnumerator HandleExplosion()
     {
+
+
+
+
+
+
+        float lerpVal = 0.0f;
+        Vector3 position = Camera.main.transform.position;
+        Vector3 origin = new Vector3(0.0f, 0.0f, -10.0f);
+        Vector3 destination = transform.position;
+        destination.z = -10f;
+        while (lerpVal < 1.0f)
+        {
+            lerpVal += Time.deltaTime * 4f;
+            Camera.main.orthographicSize = Mathf.Lerp(5, 1, lerpVal);
+            position.x = Mathf.Lerp(origin.x, destination.x, lerpVal);
+            position.y = Mathf.Lerp(origin.y, destination.y, lerpVal);
+            Camera.main.transform.position = position;
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.2f);
+
+
+
+
         Camera.main.gameObject.GetComponent<Shaky>().StartShake(0.07f, 0.25f);
         hasBone = false;
         Vector2 explosionForce = Vector2.zero;
@@ -56,8 +81,42 @@ public class insideBone : MonoBehaviour
             Rigidbody2D r = c.gameObject.GetComponent<Rigidbody2D>();
             if (r) r.AddForce((Vector2)transform.position - r.position, ForceMode2D.Impulse);
         }
+
+
+
+        position = Camera.main.transform.position;
+        while (lerpVal > 0.0f)
+        {
+            lerpVal -= Time.deltaTime * 8f;
+            Camera.main.orthographicSize = Mathf.Lerp(5, 1, lerpVal);
+            position.x = Mathf.Lerp(origin.x, destination.x, lerpVal);
+            position.y = Mathf.Lerp(origin.y, destination.y, lerpVal);
+            Camera.main.transform.position = position;
+            yield return null;
+        }
+
+        Camera.main.transform.position = origin;
+
+
         yield return new WaitForSeconds(1.0f);
         newBone.GetComponent<MoveableObject>().collisionEventsEnabled = true;
+
+
+
+
+
+
+
+
+
+
+
+        
+        yield return null;
+    }
+
+    IEnumerator CameraZoom()
+    {
         yield return null;
     }
 
