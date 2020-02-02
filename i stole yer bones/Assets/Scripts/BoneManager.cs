@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BoneManager : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class BoneManager : MonoBehaviour
             StartCoroutine(Shake(healthbar.transform));
         }
         healthbar.value = health;
+        if (health <= 0) SceneManager.LoadScene(2);
 
         AddScores();
     }
