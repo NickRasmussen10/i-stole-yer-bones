@@ -86,11 +86,14 @@ public class BoneManager : MonoBehaviour
     IEnumerator ExplosionManager()
     {
         int explosionChance;
+        float timeSinceLast = 0.0f;
         while (true)
         {
+            timeSinceLast += Time.deltaTime;
             explosionChance = Random.Range(0, 7);
-            if(explosionChance == 0 && GetNumMissingBones() != 8)
+            if((explosionChance == 0 || timeSinceLast > 3.0f) && GetNumMissingBones() != 8)
             {
+                timeSinceLast = 0.0f;
                 int whoIsTheLuckyBone;
                 do
                 {

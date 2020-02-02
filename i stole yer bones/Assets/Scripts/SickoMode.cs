@@ -36,14 +36,13 @@ public class SickoMode : MonoBehaviour
         float lerpVal = 0.0f;
         while(lerpVal < 1.0f)
         {
-            Debug.Log(lerpVal);
             lerpVal += Time.deltaTime;
             globalLight.intensity = Mathf.Lerp(1.0f, 0.5f, lerpVal);
             for(int i = 0; i < buttonLights.Length; i++)
             {
                 buttonLights[i].intensity = Mathf.Lerp(0.0f, 1.0f, lerpVal);
             }
-
+            //Camera.main.orthographicSize = Mathf.Lerp(5f, 4.5f, lerpVal);
             yield return null;
         }
     }
@@ -57,13 +56,14 @@ public class SickoMode : MonoBehaviour
 
         while(lerpVal < 1.0f)
         {
-            lerpVal += Time.deltaTime;
+            lerpVal += Time.deltaTime * 8f;
             globalLight.intensity = Mathf.Lerp(globalLightStart, 1.0f, lerpVal);
             for(int i = 0; i < buttonLights.Length; i++)
             {
                 buttonLights[i].intensity = Mathf.Lerp(buttonLightStart, 0.0f, lerpVal);
             }
 
+            //Camera.main.orthographicSize = Mathf.Lerp(4.5f, 5f, lerpVal);
             yield return null;
         }
 
