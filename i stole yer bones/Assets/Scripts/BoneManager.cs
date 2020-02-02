@@ -19,6 +19,7 @@ public class BoneManager : MonoBehaviour
     
     public float health = 1.0f;
     Score score;
+    bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,7 @@ public class BoneManager : MonoBehaviour
         score = FindObjectOfType<Score>();
         audio = FindObjectOfType<AudioManager>();
         score.score = 0;
+        isDead = false;
     }
 
     // Update is called once per frame
@@ -45,9 +47,48 @@ public class BoneManager : MonoBehaviour
             StartCoroutine(Shake(healthbar.transform));
         }
         healthbar.value = health;
-        if (health <= 0) SceneManager.LoadScene(2);
+        if (health <= 0 && !isDead) StartCoroutine(Die());
 
         AddScores();
+    }
+
+    IEnumerator Die()
+    {
+        isDead = true;
+        for(int i = 0; i < insideBones.Count; i++)
+        {
+            HingeJoint2D h = insideBones[i].gameObject.transform.parent.GetComponent<HingeJoint2D>();
+            if(h) h.enabled = false;
+        }
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(Vector2.zero, 5);
+        foreach (Collider2D c in colliders)
+        {
+            Rigidbody2D r = c.gameObject.GetComponent<Rigidbody2D>();
+            if (r)
+            {
+                int direction = Random.Range(0, 4);
+                Vector2 force = Vector2.zero;
+                switch (direction)
+                {
+                    case 0:
+                        force = new Vector2(5.0f, 5.0f);
+                        break;
+                    case 1:
+                        force = new Vector2(-5.0f, 5.0f);
+                        break;
+                    case 2:
+                        force = new Vector2(5.0f, -5.0f);
+                        break;
+                    case 3:
+                        force = new Vector2(-5.0f, -5.0f);
+                        break;
+                }
+                r.AddForce(force, ForceMode2D.Impulse);
+            }
+        }
+
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene(2);
     }
 
     int GetNumMissingBones()
@@ -74,7 +115,7 @@ public class BoneManager : MonoBehaviour
             Debug.Log("we goin sicko");
             sickoMode.GoSickoMode();
         }
-        else if (buttonsPressed < 4 && sickoMode.isSicko)
+        if (buttonsPressed < 4 && sickoMode.isSicko)
         {
             Debug.Log("no longer sicko");
             sickoMode.RIPSickoMode();
