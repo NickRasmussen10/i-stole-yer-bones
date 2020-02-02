@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -34,12 +35,15 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         Play("Music");
+        sounds[1].source.loop = true;
     }
+
+
 
     public void Play(string name)
     {
         Sound s = System.Array.Find(sounds, sound => sound.name == name);
-
+        Debug.Log(name);
         if (s.source)
         {
             s.source.Play();

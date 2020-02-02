@@ -5,7 +5,7 @@ using UnityEngine;
 public class RagdollDrag : MonoBehaviour
 {
     Rigidbody2D rb = null;
-    bool isHeld = false; //is the mouse holding this objct?
+    public bool isHeld = false; //is the mouse holding this objct?
     [SerializeField] bool needsBone = true;
 
     public bool sticking = false;
@@ -51,6 +51,8 @@ public class RagdollDrag : MonoBehaviour
             if (!isHeld)
             {
                 isHeld = true;
+
+                if (rb.bodyType == RigidbodyType2D.Kinematic) rb.bodyType = RigidbodyType2D.Dynamic;
                 //mouseDisplacement = mouseDisplacement - transform.position;
             }
         }

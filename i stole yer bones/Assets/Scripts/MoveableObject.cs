@@ -82,6 +82,12 @@ public class MoveableObject : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        int punchIndex = Random.Range(1, 4);
+        FindObjectOfType<AudioManager>().Play("punch" + punchIndex);
+    }
+
     bool ParentIsInsideBone()
     {
         return transform.parent != null && transform.parent.gameObject.tag == "insideBone";

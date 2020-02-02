@@ -10,16 +10,20 @@ public class BoneManager : MonoBehaviour
     [SerializeField] Slider healthbar;
     [SerializeField] Text scoreText;
     [SerializeField] List<button> buttons = new List<button>();
+
+    AudioManager audio;
     Vector3 healthBarOrigin;
     
     public float health = 1.0f;
-    int score = 0;
+    Score score;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(ExplosionManager());
         healthBarOrigin = healthbar.transform.position;
+        score = FindObjectOfType<Score>();
+        audio = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -59,8 +63,8 @@ public class BoneManager : MonoBehaviour
         {
             if (b.pressed) buttonsPressed++;
         }
-        score += buttonsPressed;
-        scoreText.text = "Score: " + score;
+        score.score += buttonsPressed;
+        scoreText.text = "Score: " + score.score;
     }
 
     IEnumerator ExplosionManager()
@@ -71,7 +75,6 @@ public class BoneManager : MonoBehaviour
             explosionChance = Random.Range(0, 7);
             if(explosionChance == 0 && GetNumMissingBones() != 8)
             {
-                Debug.Log("boom");
                 int whoIsTheLuckyBone;
                 do
                 {

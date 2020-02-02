@@ -30,7 +30,6 @@ public class SceneTransitions : MonoBehaviour
         }
         else if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            Debug.Log("here");
             if (Input.anyKeyDown)
             {
                 SceneManager.LoadScene(1);

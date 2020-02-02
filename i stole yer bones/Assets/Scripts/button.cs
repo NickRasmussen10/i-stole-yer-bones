@@ -32,20 +32,24 @@ public class button : MonoBehaviour
     {
         if (collision.gameObject.tag == "ragdoll")
         {
-            Debug.Log(collision.gameObject);
-            if (collision.GetComponentInChildren<insideBone>().hasBone)
+            insideBone inBone = collision.GetComponentInChildren<insideBone>();
+            RagdollDrag rdd = collision.gameObject.GetComponent<RagdollDrag>();
+            if (inBone && rdd)
             {
-                pressed = true;
-                if (collision.gameObject.transform.position != snapPos.position)
+                if (inBone.hasBone && !rdd.isHeld)
                 {
-                    if (collision.gameObject.GetComponent<RagdollDrag>()) collision.gameObject.GetComponent<RagdollDrag>().StickTo(snapPos);
+                    pressed = true;
+                    if (collision.gameObject.transform.position != snapPos.position)
+                    {
+                        if (collision.gameObject.GetComponent<RagdollDrag>()) collision.gameObject.GetComponent<RagdollDrag>().StickTo(snapPos);
+                    }
+
+
+                    Vector2 size = fill.size;
+                    size.y += 0.1f;
+                    if (size.y < 4.5f) size.y = 4.5f;
+                    fill.size = size;
                 }
-
-
-                Vector2 size = fill.size;
-                size.y += 0.1f;
-                if (size.y < 4.5f) size.y = 4.5f;
-                fill.size = size;
             }
         }
     }
