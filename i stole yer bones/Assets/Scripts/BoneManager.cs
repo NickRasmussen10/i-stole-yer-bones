@@ -12,6 +12,8 @@ public class BoneManager : MonoBehaviour
     [SerializeField] List<button> buttons = new List<button>();
     [SerializeField] List<Animator> quoteAnimators = new List<Animator>();
 
+    [SerializeField] SickoMode sickoMode;
+
     AudioManager audio;
     Vector3 healthBarOrigin;
     
@@ -66,6 +68,18 @@ public class BoneManager : MonoBehaviour
             if (b.pressed) buttonsPressed++;
         }
         score.score += buttonsPressed;
+
+        if(buttonsPressed == 4 && !sickoMode.isSicko)
+        {
+            Debug.Log("we goin sicko");
+            sickoMode.GoSickoMode();
+        }
+        else if (buttonsPressed < 4 && sickoMode.isSicko)
+        {
+            Debug.Log("no longer sicko");
+            sickoMode.RIPSickoMode();
+        }
+
         scoreText.text = "Score: " + score.score;
     }
 
@@ -75,7 +89,7 @@ public class BoneManager : MonoBehaviour
         while (true)
         {
             explosionChance = Random.Range(0, 7);
-            if(explosionChance == 0 && GetNumMissingBones() != 8)
+            if(explosionChance == 9 && GetNumMissingBones() != 8)
             {
                 int whoIsTheLuckyBone;
                 do
