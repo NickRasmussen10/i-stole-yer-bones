@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransitions : MonoBehaviour
 {
-    bool instructions = false;
+    int instructions = 1;
+    [SerializeField] Animator anim;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,13 +16,14 @@ public class SceneTransitions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.anyKeyDown && instructions)
+        if(Input.anyKeyDown && instructions == 7)
         {
             SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
         }
         else if (Input.anyKeyDown)
         {
-            instructions = true;
+            instructions++;
+            anim.SetTrigger("continue");
         }
     }
 }
