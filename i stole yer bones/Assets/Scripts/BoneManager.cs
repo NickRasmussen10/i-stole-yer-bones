@@ -89,7 +89,7 @@ public class BoneManager : MonoBehaviour
         while (true)
         {
             explosionChance = Random.Range(0, 7);
-            if(explosionChance == 9 && GetNumMissingBones() != 8)
+            if(explosionChance == 0 && GetNumMissingBones() != 8)
             {
                 int whoIsTheLuckyBone;
                 do
