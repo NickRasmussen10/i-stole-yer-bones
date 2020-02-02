@@ -10,6 +10,7 @@ public class BoneManager : MonoBehaviour
     [SerializeField] Slider healthbar;
     [SerializeField] Text scoreText;
     [SerializeField] List<button> buttons = new List<button>();
+    [SerializeField] List<Animator> quoteAnimators = new List<Animator>();
 
     AudioManager audio;
     Vector3 healthBarOrigin;
@@ -81,6 +82,10 @@ public class BoneManager : MonoBehaviour
                     whoIsTheLuckyBone = Random.Range(0, 8);
                 } while (!insideBones[whoIsTheLuckyBone].hasBone);
                 insideBones[whoIsTheLuckyBone].Explode();
+
+                int quoteIndex = Random.Range(1, 8);
+                FindObjectOfType<AudioManager>().Play("kent" + quoteIndex);
+                quoteAnimators[quoteIndex - 1].SetTrigger("play");
             }
             yield return new WaitForSecondsRealtime(0.5f);
         }
