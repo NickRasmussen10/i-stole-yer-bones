@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        Play("Music");
+        //Play("Music");
         sounds[1].source.loop = true;
     }
 
